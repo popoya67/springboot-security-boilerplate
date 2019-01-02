@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: securing-web
+Implementation-Version: 0.1.0
+Built-By: sujin
+Implementation-Vendor-Id: com.bory
+Build-Jdk: 1.8.0_172
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/securing-web
+Created-By: Maven Integration for Eclipse
+
