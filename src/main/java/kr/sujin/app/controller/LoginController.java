@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage(HttpServletRequest request) {
-	    String referer = request.getHeader("Referer");
-	    request.getSession().setAttribute("prevPage", referer);
 	    return "login/login";
 	}
 }
