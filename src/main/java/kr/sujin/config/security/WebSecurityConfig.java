@@ -14,14 +14,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private AuthProvider authProvider;
+	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+         
+         http
         	.csrf().disable()
             .authorizeRequests()
-                .antMatchers("/", "/main").permitAll()
-                .antMatchers("/admin/*").hasAuthority("ADMIN")
-                .anyRequest().authenticated()
+            	.antMatchers("/", "/main","/accessDenied").permitAll()
+            	.anyRequest().access("@authorizationChecker.check(request, authentication)")
                 .and()
             .formLogin()
                 .loginPage("/login")
@@ -37,9 +38,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		    .authenticationProvider(authProvider)
 		    .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
     }
-    
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
-    }
+
+
+	@Bean
+	public AccessDeniedHandler accessDeniedHandler() {
+		return new CustomAccessDeniedHandler();
+	}
 }

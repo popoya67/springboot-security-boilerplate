@@ -14,13 +14,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import kr.sujin.app.dto.User;
-import kr.sujin.app.service.UserService;
+import kr.sujin.app.repository.UserRepository;
 
 @Service
 public class AuthProvider implements AuthenticationProvider {
 
 	@Autowired
-	private UserService userService;
+	private UserRepository userService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -42,7 +42,9 @@ public class AuthProvider implements AuthenticationProvider {
 		}
 		
 		ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-	    auth.add(new SimpleGrantedAuthority(user.getAuthority()));
+		for(String authority : user.getAuthority()) {
+			auth.add(new SimpleGrantedAuthority(authority));
+		}
 		return new UsernamePasswordAuthenticationToken(user, password, auth);
 	}
 
